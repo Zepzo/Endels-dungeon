@@ -56,6 +56,21 @@ int DirectionDown(Rectangle *Room, Rectangle *Coridor, Vector2 *NewDungeonPos, i
     return 0;
 }
 
+int StopGoingBack(int x){
+    if(x == 0){
+        return 1;
+    }
+    else if(x == 1){
+        return 0;
+    }
+    else if(x == 2){
+        return 3;
+    }
+    else if(x == 3){
+        return 2;
+    }
+}
+
 int main(void)
 {
     InitWindow(900, 900, "Endless Dugneon");
@@ -69,6 +84,8 @@ int main(void)
     Rectangle Coridor[2] = {{80, 80, 100, 20}, {80, 80, 100, 20}};
     
     Vector2 NewDungeonPos;
+    
+    int Stop = 5;
 
     while (!WindowShouldClose())
     {
@@ -77,37 +94,41 @@ int main(void)
         
         if(IsKeyPressed(KEY_SPACE)){
             for(int i = 0; i < 3; i++){
+                Again:
                 int Num = (rand() % (4));
                 
                 if(i == 2){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                 }
-                else if (Num == 0){
+                else if (Num == 0 && Stop != 1){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
                     DirectionRight(Room, Coridor, &NewDungeonPos, i);
                 }
-                else if(Num == 1){
+                else if(Num == 1 && Stop != 0){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
                     DirectionLeft(Room, Coridor, &NewDungeonPos, i);
                 }
-                else if(Num == 2){
+                else if(Num == 2 && Stop != 3){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
                     DirectionUp(Room, Coridor, &NewDungeonPos, i);
                 }
-                else if(Num == 3){
+                else if(Num == 3 && Stop != 2){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
                     DirectionDown(Room, Coridor, &NewDungeonPos, i);
                 }
-                
+                else{
+                    goto Again;
+                }
+                Stop = Num;
             }
         }
         
