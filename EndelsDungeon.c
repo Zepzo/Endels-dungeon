@@ -56,21 +56,6 @@ int DirectionDown(Rectangle *Room, Rectangle *Coridor, Vector2 *NewDungeonPos, i
     return 0;
 }
 
-int StopGoingBack(int x){
-    if(x == 0){
-        return 1;
-    }
-    else if(x == 1){
-        return 0;
-    }
-    else if(x == 2){
-        return 3;
-    }
-    else if(x == 3){
-        return 2;
-    }
-}
-
 int main(void)
 {
     InitWindow(900, 900, "Endless Dugneon");
@@ -85,7 +70,7 @@ int main(void)
     
     Vector2 NewDungeonPos;
     
-    int Stop = 5;
+    int StopGoingBack = 5;// keeps track of the direction to prevent a room fom being placed on another room
 
     while (!WindowShouldClose())
     {
@@ -101,25 +86,25 @@ int main(void)
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                 }
-                else if (Num == 0 && Stop != 1){
+                else if (Num == 0 && StopGoingBack != 1){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
                     DirectionRight(Room, Coridor, &NewDungeonPos, i);
                 }
-                else if(Num == 1 && Stop != 0){
+                else if(Num == 1 && StopGoingBack != 0){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
                     DirectionLeft(Room, Coridor, &NewDungeonPos, i);
                 }
-                else if(Num == 2 && Stop != 3){
+                else if(Num == 2 && StopGoingBack != 3){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
                     DirectionUp(Room, Coridor, &NewDungeonPos, i);
                 }
-                else if(Num == 3 && Stop != 2){
+                else if(Num == 3 && StopGoingBack != 2){
                     Room[i].x = NewDungeonPos.x;
                     Room[i].y = NewDungeonPos.y;
                     
@@ -128,7 +113,7 @@ int main(void)
                 else{
                     goto Again;
                 }
-                Stop = Num;
+                StopGoingBack = Num;
             }
         }
         
@@ -137,6 +122,13 @@ int main(void)
             
             for(int i = 0; i < 3; i++){
                 DrawRectangle(Room[i].x, Room[i].y, Room[i].width, Room[i].height, BLACK);
+                
+                if(i == 0){
+                    DrawText("Start", Room[i].x + 10, Room[i].y + 20, 30, WHITE);
+                }
+                else if(i == 2){
+                    DrawText("End", Room[i].x + 10, Room[i].y + 20, 30, WHITE);
+                }
             }
             for(int i = 0; i < 2; i++){
                 DrawRectangle(Coridor[i].x, Coridor[i].y, Coridor[i].width, Coridor[i].height, GRAY);
