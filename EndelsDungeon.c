@@ -113,22 +113,22 @@ int main(void)
     
     srand(time(0));
     
-    Rectangle Room[3] = {{80, 450, 100, 100}, 
-    {80, 450, 100, 100}, 
-    {80, 450, 100, 100}};
+    Rectangle Room[3] = {{400, 400, 100, 100}, 
+    {400, 400, 100, 100}, 
+    {400, 400, 100, 100}};
     
-    Rectangle Coridor[2] = {{80, 80, 100, 20}, {80, 80, 100, 20}};
+    Rectangle Coridor[2] = {{400, 400, 100, 20}, {400, 400, 100, 20}};
     
     struct Door Doors[2];
     
     for(int i = 0; i < 2; i++){
-        Doors[i].door1.x = 80;
-        Doors[i].door1.y = 80;
+        Doors[i].door1.x = 400;
+        Doors[i].door1.y = 400;
         Doors[i].door1.width = 10;
         Doors[i].door1.height = 20;
         
-        Doors[i].door2.x = 80;
-        Doors[i].door2.y = 80;
+        Doors[i].door2.x = 400;
+        Doors[i].door2.y = 400;
         Doors[i].door2.width = 10;
         Doors[i].door2.height = 20;
         
@@ -138,13 +138,38 @@ int main(void)
     Vector2 NewDungeonPos;
     
     int StopGoingBack = 5;// keeps track of the direction to prevent a room fom being placed on another room
+    
+    bool SpaceBoutton = false;
+    bool SpaceIsPressed = false;
+    bool EscBoutton = false;
+    
+    bool exitWindow = false;    // Flag to set window to exit
 
-    while (!WindowShouldClose())
+    while (!exitWindow)
     {
         NewDungeonPos.x = 400;
         NewDungeonPos.y = 400;
         
-        if(IsKeyPressed(KEY_SPACE)){ // randomly generate a direction a new room spwans in
+        Vector2 mouse = GetMousePosition();
+                if (CheckCollisionPointRec(mouse, (Rectangle){50, 710, 200, 50, RAYWHITE})) {
+                  SpaceBoutton = true;
+                  if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                      SpaceIsPressed = true;
+                  }
+                }
+                else if (CheckCollisionPointRec(mouse, (Rectangle){50, 810, 200, 50, RAYWHITE})) {
+                  EscBoutton = true;
+                  if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                      exitWindow = true;
+                  }
+                }
+                else{
+                    SpaceBoutton = false;
+                    EscBoutton = false;
+                }
+        
+        if(IsKeyPressed(KEY_SPACE) || SpaceIsPressed){ // randomly generate a direction a new room spwans in
+            SpaceIsPressed = false;
             for(int i = 0; i < 3; i++){
                 Again:
                 int Num = (rand() % (4)); 
@@ -184,6 +209,9 @@ int main(void)
             }
         }
         
+        if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) exitWindow = true;
+        
+        
         BeginDrawing();
             ClearBackground(RAYWHITE);
             
@@ -203,6 +231,14 @@ int main(void)
                 DrawRectangle(Doors[i].door1.x, Doors[i].door1.y, Doors[i].door1.width, Doors[i].door1.height, BROWN);
                 DrawRectangle(Doors[i].door2.x, Doors[i].door2.y, Doors[i].door2.width, Doors[i].door2.height, BROWN);
             }
+            
+            DrawRectangle(50, 710, 200, 50, SpaceBoutton ? GRAY : WHITE);
+            DrawRectangleLines(50, 710, 200, 50, BLACK);
+            DrawText("Space", 110, 720, 30, BLACK);
+            
+            DrawRectangle(50, 810, 200, 50, EscBoutton ? GRAY : WHITE);
+            DrawRectangleLines(50, 810, 200, 50, BLACK);
+            DrawText("ESC", 110, 820, 30, BLACK);
             
         EndDrawing();
     }
