@@ -119,21 +119,40 @@ int DirectionDown(Rectangle *Room, Rectangle *Coridor, Vector2 *NewDungeonPos, i
     return 0;
 }
 
+int OutOfBoundce(Vector2 *NewDungeonPos){
+    if(NewDungeonPos->x > 900){
+        return 1;
+    }
+    else if(NewDungeonPos->x < 0){
+        return 1;
+    }
+    else if(NewDungeonPos->y > 900){
+        return 1;
+    }
+    else if(NewDungeonPos->y < 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
 int main(void)
 {
     InitWindow(900, 900, "Endless Dugneon");
     
     srand(time(0));
     
-    Rectangle Room[3] = {{400, 400, 100, 100}, 
+    Rectangle Room[4] = {{400, 400, 100, 100}, 
+    {400, 400, 100, 100}, 
     {400, 400, 100, 100}, 
     {400, 400, 100, 100}};
     
-    Rectangle Coridor[2] = {{400, 400, 100, 20}, {400, 400, 100, 20}};
+    Rectangle Coridor[3] = {{400, 400, 100, 20}, {400, 400, 100, 20}, {400, 400, 100, 20}};
     
-    struct Door Doors[2];
+    struct Door Doors[3];
     
-    for(int i = 0; i < 2; i++){
+    for(int i = 0; i < 3; i++){
         Doors[i].door1.x = 400;
         Doors[i].door1.y = 400;
         Doors[i].door1.width = 10;
@@ -150,6 +169,7 @@ int main(void)
     Vector2 NewDungeonPos;
     
     int StopGoingBack = 5;// keeps track of the direction to prevent a room fom being placed on another room
+    int StopOutOfBounce = 0; // check for out of bounce
     
     bool SpaceBoutton = false;
     bool SpaceIsPressed = false;
@@ -182,42 +202,38 @@ int main(void)
         
         if(IsKeyPressed(KEY_SPACE) || SpaceIsPressed){ // randomly generate a direction a new room spwans in
             SpaceIsPressed = false;
-            for(int i = 0; i < 3; i++){
-                Again:  // we want to roll back to this point if ..
-                int Num = (rand() % (4)); 
+            for(int i = 0; i < 4; i++){
                 
-                if(i == 2){
-                    Room[i].x = NewDungeonPos.x;
-                    Room[i].y = NewDungeonPos.y;
+                Room[i].x = NewDungeonPos.x;
+                Room[i].y = NewDungeonPos.y;
+                
+                Again:  // Stop rooms from spwaning out of bounce
+                StopOutOfBounce = 0; // rests check for out of bounce
+                int Num = (rand() % (4));
+                  
+                if(i == 3){
+                    
                 }
                 else if (Num == 0 && StopGoingBack != 1){
-                    Room[i].x = NewDungeonPos.x;
-                    Room[i].y = NewDungeonPos.y;
-                    
                     DirectionRight(Room, Coridor, &NewDungeonPos, i, Doors);
                 }
                 else if(Num == 1 && StopGoingBack != 0){
-                    Room[i].x = NewDungeonPos.x;
-                    Room[i].y = NewDungeonPos.y;
-                    
                     DirectionLeft(Room, Coridor, &NewDungeonPos, i, Doors);
                 }
                 else if(Num == 2 && StopGoingBack != 3){
-                    Room[i].x = NewDungeonPos.x;
-                    Room[i].y = NewDungeonPos.y;
-                    
                     DirectionUp(Room, Coridor, &NewDungeonPos, i, Doors);
                 }
                 else if(Num == 3 && StopGoingBack != 2){
-                    Room[i].x = NewDungeonPos.x;
-                    Room[i].y = NewDungeonPos.y;
-                    
                     DirectionDown(Room, Coridor, &NewDungeonPos, i, Doors);
                 }
-                else{
-                    goto Again; // if there is overlap it runs the loop again but stays on the same i vale
+                
+                StopOutOfBounce = OutOfBoundce(&NewDungeonPos);
+                
+                if(StopOutOfBounce == 1){
+                    goto Again; // Stop rooms from spwaning out of bounce
                 }
-                StopGoingBack = Num;
+                
+                //StopGoingBack = Num;
             }
         }
         
@@ -227,17 +243,16 @@ int main(void)
         BeginDrawing();
             ClearBackground(RAYWHITE);
             
-            for(int i = 0; i < 3; i++){
+            for(int i = 0; i < 4; i++){
                 DrawRectangle(Room[i].x, Room[i].y, Room[i].width, Room[i].height, BLACK);
                 
-                if(i == 0){
-                    DrawText("Start", Room[i].x + 10, Room[i].y + 20, 30, WHITE);
-                }
-                else if(i == 2){
-                    DrawText("End", Room[i].x + 10, Room[i].y + 20, 30, WHITE);
+                DrawText("Start", 410, 420, 30, WHITE);
+                
+                if(i == 3){
+                    DrawText("End", Room[i].x + 10, Room[i].y + 60, 30, WHITE);
                 }
             }
-            for(int i = 0; i < 2; i++){
+            for(int i = 0; i < 3; i++){
                 DrawRectangle(Coridor[i].x, Coridor[i].y, Coridor[i].width, Coridor[i].height, GRAY);
                 
                 DrawRectangle(Doors[i].door1.x, Doors[i].door1.y, Doors[i].door1.width, Doors[i].door1.height, BROWN);
