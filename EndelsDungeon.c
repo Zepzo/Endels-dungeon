@@ -1,3 +1,15 @@
+/* to do list
+
+* make the generationmore complex
+-Allow more rooms and have relevant checks for that
+-look in to room ovelap or rooms having more concetions
+-maby let user decide how many rooms
+
+* make it look nice
+-
+*/
+
+
 #include "raylib.h"
 #include "raymath.h"
 #include <stdio.h>
@@ -151,13 +163,13 @@ int main(void)
         NewDungeonPos.y = 400;
         
         Vector2 mouse = GetMousePosition();
-                if (CheckCollisionPointRec(mouse, (Rectangle){50, 710, 200, 50, RAYWHITE})) {
+                if (CheckCollisionPointRec(mouse, (Rectangle){10, 750, 200, 50, RAYWHITE})) {
                   SpaceBoutton = true;
                   if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
                       SpaceIsPressed = true;
                   }
                 }
-                else if (CheckCollisionPointRec(mouse, (Rectangle){50, 810, 200, 50, RAYWHITE})) {
+                else if (CheckCollisionPointRec(mouse, (Rectangle){10, 810, 200, 50, RAYWHITE})) {
                   EscBoutton = true;
                   if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
                       exitWindow = true;
@@ -171,7 +183,7 @@ int main(void)
         if(IsKeyPressed(KEY_SPACE) || SpaceIsPressed){ // randomly generate a direction a new room spwans in
             SpaceIsPressed = false;
             for(int i = 0; i < 3; i++){
-                Again:
+                Again:  // we want to roll back to this point if ..
                 int Num = (rand() % (4)); 
                 
                 if(i == 2){
@@ -232,13 +244,16 @@ int main(void)
                 DrawRectangle(Doors[i].door2.x, Doors[i].door2.y, Doors[i].door2.width, Doors[i].door2.height, BROWN);
             }
             
-            DrawRectangle(50, 710, 200, 50, SpaceBoutton ? GRAY : WHITE);
-            DrawRectangleLines(50, 710, 200, 50, BLACK);
-            DrawText("Space", 110, 720, 30, BLACK);
+            DrawText("To generate dungeon press [Space]", 10, 20, 20, BLACK);
+            DrawText("To exit dungeon press [ESC]", 10, 70, 20, BLACK);
             
-            DrawRectangle(50, 810, 200, 50, EscBoutton ? GRAY : WHITE);
-            DrawRectangleLines(50, 810, 200, 50, BLACK);
-            DrawText("ESC", 110, 820, 30, BLACK);
+            DrawRectangle(10, 750, 200, 50, SpaceBoutton ? GRAY : WHITE);
+            DrawRectangleLines(10, 750, 200, 50, BLACK);
+            DrawText("Space", 50, 760, 30, BLACK);
+            
+            DrawRectangle(10, 810, 200, 50, EscBoutton ? GRAY : WHITE);
+            DrawRectangleLines(10, 810, 200, 50, BLACK);
+            DrawText("ESC", 50, 820, 30, BLACK);
             
         EndDrawing();
     }
