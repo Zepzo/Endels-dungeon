@@ -143,16 +143,23 @@ int main(void)
     
     srand(time(0));
     
-    Rectangle Room[4] = {{400, 400, 100, 100}, 
-    {400, 400, 100, 100}, 
-    {400, 400, 100, 100}, 
-    {400, 400, 100, 100}};
+    int RoomAmount = 4;
+    int CoridorAmount = RoomAmount - 1;
     
-    Rectangle Coridor[3] = {{400, 400, 100, 20}, {400, 400, 100, 20}, {400, 400, 100, 20}};
+    Rectangle Room[RoomAmount];
     
-    struct Door Doors[3];
+    Rectangle Coridor[CoridorAmount];
     
-    for(int i = 0; i < 3; i++){
+    struct Door Doors[CoridorAmount];
+    
+    for(int i = 0; i < RoomAmount; i++){
+        Room[i].x = 400;
+        Room[i].y = 400;
+        Room[i].width = 100;
+        Room[i].height = 100;
+    }
+    
+    for(int i = 0; i < CoridorAmount; i++){
         Doors[i].door1.x = 400;
         Doors[i].door1.y = 400;
         Doors[i].door1.width = 10;
@@ -164,6 +171,11 @@ int main(void)
         Doors[i].door2.height = 20;
         
         Doors[i].isLocked = false;
+        
+        Coridor[i].x = 400;
+        Coridor[i].y = 400;
+        Coridor[i].width = 100;
+        Coridor[i].height = 20;
     }
     
     Vector2 NewDungeonPos;
@@ -202,7 +214,7 @@ int main(void)
         
         if(IsKeyPressed(KEY_SPACE) || SpaceIsPressed){ // randomly generate a direction a new room spwans in
             SpaceIsPressed = false;
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < RoomAmount; i++){
                 
                 Room[i].x = NewDungeonPos.x;
                 Room[i].y = NewDungeonPos.y;
@@ -243,7 +255,7 @@ int main(void)
         BeginDrawing();
             ClearBackground(RAYWHITE);
             
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < RoomAmount; i++){
                 DrawRectangle(Room[i].x, Room[i].y, Room[i].width, Room[i].height, BLACK);
                 
                 DrawText("Start", 410, 420, 30, WHITE);
@@ -252,7 +264,7 @@ int main(void)
                     DrawText("End", Room[i].x + 10, Room[i].y + 60, 30, WHITE);
                 }
             }
-            for(int i = 0; i < 3; i++){
+            for(int i = 0; i < CoridorAmount; i++){
                 DrawRectangle(Coridor[i].x, Coridor[i].y, Coridor[i].width, Coridor[i].height, GRAY);
                 
                 DrawRectangle(Doors[i].door1.x, Doors[i].door1.y, Doors[i].door1.width, Doors[i].door1.height, BROWN);
