@@ -1,12 +1,23 @@
 /* to do list
 
 * make the generationmore complex
--Allow more rooms and have relevant checks for that
--look in to room ovelap or rooms having more concetions
--maby let user decide how many rooms
+-Allow more rooms and have relevant checks for that (only works with 4 rooms idk why)^
+-look in to room ovelap or rooms having more concetions(Have implemented this)^
+-maby let user decide how many rooms(Probolaby wont work, needs a lot of debuging)^
 
 * make it look nice
+-nice colors
+-maby outline for rectangels to look like walls
+-maby have a start screen, probaly not like the way it is now
 -
+
+* add player (most likely not)
+-add a square that can move
+-add colition
+-locked doors?
+
+* maby refactor(almost 100% sure I wont do this)
+-move direction stuff to its own file, not a lot so probaly not
 */
 
 
