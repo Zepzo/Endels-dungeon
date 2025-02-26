@@ -1,9 +1,9 @@
 /* to do list
 
 * make the generationmore complex
--Allow more rooms and have relevant checks for that (only works with 4 rooms idk why)^
--look in to room ovelap or rooms having more concetions(Have implemented this)^
--maby let user decide how many rooms(Probolaby wont work, needs a lot of debuging)^
+-Allow more rooms and have relevant checks for that(is working)
+-look in to room ovelap or rooms having more concetions(Have implemented this)
+-maby let user decide how many rooms(Maby but with overlap the amount of rooms veary on its own)
 
 * make it look nice
 -nice colors
@@ -154,7 +154,7 @@ int main(void)
     
     srand(time(0));
     
-    int RoomAmount = 4;
+    int RoomAmount = 15;
     int CoridorAmount = RoomAmount - 1;
     
     Rectangle Room[RoomAmount];
@@ -234,7 +234,7 @@ int main(void)
                 StopOutOfBounce = 0; // rests check for out of bounce
                 int Num = (rand() % (4));
                   
-                if(i == 3){
+                if(i == RoomAmount - 1){
                     
                 }
                 else if (Num == 0 && StopGoingBack != 1){
@@ -271,7 +271,7 @@ int main(void)
                 
                 DrawText("Start", 410, 420, 30, WHITE);
                 
-                if(i == 3){
+                if(i == RoomAmount - 1){
                     DrawText("End", Room[i].x + 10, Room[i].y + 60, 30, WHITE);
                 }
             }
