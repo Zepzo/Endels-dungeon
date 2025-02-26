@@ -1,13 +1,13 @@
 /* to do list
 
 * make the generationmore complex
--Allow more rooms and have relevant checks for that(is working)
--look in to room ovelap or rooms having more concetions(Have implemented this)
--maby let user decide how many rooms(Maby but with overlap the amount of rooms veary on its own)
+-Allow more rooms and have relevant checks for that(done)
+-look in to room ovelap or rooms having more concetions(done)
+-maby let user decide how many rooms
 
 * make it look nice
--nice colors
--maby outline for rectangels to look like walls
+-nice colors(done)
+-maby outline for rectangels to look like walls(done)
 -maby have a start screen, probaly not like the way it is now
 -
 
@@ -19,7 +19,6 @@
 * maby refactor(almost 100% sure I wont do this)
 -move direction stuff to its own file, not a lot so probaly not
 */
-
 
 #include "raylib.h"
 #include "raymath.h"
@@ -154,7 +153,7 @@ int main(void)
     
     srand(time(0));
     
-    int RoomAmount = 15;
+    int RoomAmount = 30;
     int CoridorAmount = RoomAmount - 1;
     
     Rectangle Room[RoomAmount];
@@ -267,9 +266,10 @@ int main(void)
             ClearBackground(RAYWHITE);
             
             for(int i = 0; i < RoomAmount; i++){
-                DrawRectangle(Room[i].x, Room[i].y, Room[i].width, Room[i].height, BLACK);
+                DrawRectangle(Room[i].x, Room[i].y, Room[i].width, Room[i].height, GRAY);
+                DrawRectangleLinesEx(Room[i], 5.0, DARKGRAY);
                 
-                DrawText("Start", 410, 420, 30, WHITE);
+                DrawText("Start", 410, 410, 30, WHITE);
                 
                 if(i == RoomAmount - 1){
                     DrawText("End", Room[i].x + 10, Room[i].y + 60, 30, WHITE);
@@ -277,6 +277,7 @@ int main(void)
             }
             for(int i = 0; i < CoridorAmount; i++){
                 DrawRectangle(Coridor[i].x, Coridor[i].y, Coridor[i].width, Coridor[i].height, GRAY);
+                DrawRectangleLinesEx(Coridor[i], 5.0, DARKGRAY);
                 
                 DrawRectangle(Doors[i].door1.x, Doors[i].door1.y, Doors[i].door1.width, Doors[i].door1.height, BROWN);
                 DrawRectangle(Doors[i].door2.x, Doors[i].door2.y, Doors[i].door2.width, Doors[i].door2.height, BROWN);
