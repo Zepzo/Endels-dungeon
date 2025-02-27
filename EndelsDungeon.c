@@ -1,13 +1,13 @@
 /* to do list
 
 * make the generationmore complex
--Allow more rooms and have relevant checks for that(done)
--look in to room ovelap or rooms having more concetions(done)
+-Allow more rooms and have relevant checks for that-(done)
+-look in to room ovelap or rooms having more concetions-(done)
 -maby let user decide how many rooms
 
 * make it look nice
--nice colors(done)
--maby outline for rectangels to look like walls(done)
+-nice colors-(done)
+-maby outline for rectangels to look like walls-(done)
 -maby have a start screen, probaly not like the way it is now
 -
 
@@ -190,14 +190,14 @@ int main(void)
     
     Vector2 NewDungeonPos;
     
-    int StopGoingBack = 5;// keeps track of the direction to prevent a room fom being placed on another room
+    int StopGoingBack = 5; // keeps track of the direction to prevent a room fom being placed on another room
     int StopOutOfBounce = 0; // check for out of bounce
     
     bool SpaceBoutton = false;
     bool SpaceIsPressed = false;
     bool EscBoutton = false;
     
-    bool exitWindow = false;    // Flag to set window to exit
+    bool exitWindow = false; // Flag to set window to exit
 
     while (!exitWindow)
     {
@@ -229,7 +229,7 @@ int main(void)
                 Room[i].x = NewDungeonPos.x;
                 Room[i].y = NewDungeonPos.y;
                 
-                Again:  // Stop rooms from spwaning out of bounce
+                Again: // Stop rooms from spwaning out of bounce
                 StopOutOfBounce = 0; // rests check for out of bounce
                 int Num = (rand() % (4));
                   
@@ -254,8 +254,6 @@ int main(void)
                 if(StopOutOfBounce == 1){
                     goto Again; // Stop rooms from spwaning out of bounce
                 }
-                
-                //StopGoingBack = Num;
             }
         }
         
