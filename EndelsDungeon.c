@@ -229,7 +229,7 @@ int main(void)
                 Room[i].x = NewDungeonPos.x;
                 Room[i].y = NewDungeonPos.y;
                 
-                Again: // Stop rooms from spwaning out of bounce
+                Again: // Stop rooms from spwaning out of bounceby running the loop again but without increasing the i value
                 StopOutOfBounce = 0; // rests check for out of bounce
                 int Num = (rand() % (4));
                   
@@ -252,7 +252,7 @@ int main(void)
                 StopOutOfBounce = OutOfBoundce(&NewDungeonPos);
                 
                 if(StopOutOfBounce == 1){
-                    goto Again; // Stop rooms from spwaning out of bounce
+                    goto Again; // Stop rooms from spwaning out of bounceby running the loop again but without increasing the i value
                 }
             }
         }
