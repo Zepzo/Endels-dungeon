@@ -194,7 +194,7 @@ int main(void)
     int StopOutOfBounce = 0; // check for out of bounce
     
     bool SpaceBoutton = false;
-    bool SpaceIsPressed = false;
+    bool SpaceIsPressed = true;
     bool EscBoutton = false;
     
     bool exitWindow = false; // Flag to set window to exit
